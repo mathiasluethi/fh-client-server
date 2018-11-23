@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var _ = require('lodash');
 
 // Load custom classes
 const UserStore = require('./userStore.js');
@@ -18,21 +19,11 @@ http.listen(process.env.PORT || 3000, () => {
     console.log('Listening on *:3000');
 });
 
-io.on('connection', function (socket) {
-    users.push(new User(socket.id, 0, 0))
-    console.log('a user connected');
-});
-
-
-
-// Game logic
-
-
 class User {
-    constructor(id, x, y) {
+    constructor(id, pictures, questions) {
         this.id = id;
-        this.x = x;
-        this.y = y
+        this.pictures = pictures;
+        this.questions = questions;
     }
 
 }
@@ -40,34 +31,84 @@ class User {
 let users = [];
 
 io.on('connection', function (socket) {
-    socket.on('test', function (input) {
-        socket.emit('response', "Response")
-    });
-
-
-    socket.on('input', function (input) {
-        user = users.find(user => user.id === socket.id)
-        switch (input) {
-            case "ArrowDown":
-                user.x = user.x - 1;
-                io.emit('player move', user)
-                break;
-            case "ArrowUp":
-                user.x = user.x + 1;
-                io.emit('player move', user)
-                break;
-            case "ArrowLeft":
-                user.y = user.y - 1;
-                io.emit('player move', user)
-                break;
-            case "ArrowRight":
-                user.y = user.y + 1;
-                io.emit('player move', user)
-                break;
-            default:
-                return; // Quit when this doesn't handle the key event.
-        }
-
-    });
+    console.log(users.length);
+    if (users.length === 0) {
+        users.push(new User(socket.id, [], []));
+        console.log(String(users.length) + " Player connected");
+        socket.emit('info', String(users.length) + " Player connected");
+    } else if (users.length === 1) {
+        users.push(new User(socket.id, [], []));
+        console.log(String(users.length) + " Players connected");
+        socket.emit('info', String(users.length) + " Player connected");
+    } else if (users.length === 2) {
+        users.push(new User(socket.id, [], []));
+        console.log("create game");
+        createGame(socket);
+    }
 });
 
+var round;
+var mission;
+var lives;
+
+
+var questions = [
+    { question: "Q1?", answer: "P1" },
+    { question: "Q2?", answer: "P2" },
+    { question: "Q3?", answer: "P3" },
+    { question: "Q4?", answer: "P4" },
+    { question: "Q5?", answer: "P5" },
+    { question: "Q6?", answer: "P6" },
+]
+
+var pictures = [
+    { picture: "P1" },
+    { picture: "P2" },
+    { picture: "P3" },
+    { picture: "P4" },
+    { picture: "P5" },
+    { picture: "P6" },
+    { picture: "P7" },
+    { picture: "P8" },
+    { picture: "P9" },
+    { picture: "P10" },
+    { picture: "P11" },
+    { picture: "P12" },
+]
+
+// Game logic
+function createGame(socket) {
+    round = 1;
+    lives = 3;
+    mission = "There is a river in the way";
+
+    _.shuffle(pictures);
+    for (i = 0; i < pictures.length; i = i) {
+        for (j = 0; j < 3; j++) {
+            users[j].pictures.push(pictures[i]);
+            i++;
+        }
+    }
+
+    for (i = 0; i < users.length; i++) {
+        j = 0;
+        while (j !== 1) {
+            question = _.sample(questions)
+            if (users[i].pictures.includes(question.answer) === false) {
+                users[i].questions.push(question);
+                j++;
+            }
+        }
+    }
+
+    gameState = {};
+    gameState.rounds = round;
+    gameState.lives = lives;
+    gameState.mission = mission;
+    socket.emit('game_state', gameState);
+
+    for (i = 0; i < 3; i++) {
+        io.to(users[i].id).emit('pictures', users[i].pictures);
+        io.to(users[i].id).emit('question', users[i].questions);
+    }
+}

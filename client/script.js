@@ -15,12 +15,17 @@ socket.on('response', function (response) {
 
 socket.on('game_state', function (gameState) {
     console.log('game_state received', gameState);
-    updateQuestion();
-    updateUI();
+    updateMission(gameState.mission);
 });
 
-socket.on('next_question', function (question) {
+socket.on('question', function (question) {
+    // TODO: fix array
+    updateQuestion(question[0]);
+});
 
+socket.on('pictures', function (pictures) {
+    updatePictures(pictures);
+    console.log(pictures);
 });
 
 function startGame() {
@@ -28,11 +33,27 @@ function startGame() {
     socket.emit('start_game');
 }
 
-function updateQuestion() {
-    console.log('question updated');
+function updateQuestion(question) {
+    var qEl = document.getElementById('question');
+    qEl.innerHTML = question.question;
+    console.log(question);
 }
 
-function updateUI() {
+function updateMission(mission) {
+    var mEl = document.getElementById('mission');
+    mEl.innerHTML = mission;
+    console.log('mission updated', mission);
+}
+
+function updatePictures(pictures) {
+    for (var i = 1; i <= 4; i++) {
+        var optionEl = document.getElementById('option' + i);
+        optionEl.innerHTML = 'option'+i;
+        console.log('setting new image ' + i);
+    }
     console.log('ui updated');
 }
 
+function sendClickEvent() {
+    socket.emit('selection', 'test');
+}
