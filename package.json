@@ -18,6 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.4",
+    "lodash": "^4.17.11",
     "socket.io": "^2.1.1"
   }
 }
