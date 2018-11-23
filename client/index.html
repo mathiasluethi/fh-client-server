@@ -8,27 +8,20 @@
 </head>
 
 <body>
-    <div id='game'></div>
+    <div id='screen'>
+        <div id="upperScreen">
+            <div id="mission"></div>
+            <div id="question"></div>
+        </div>
+        <div id="lowerScreen">
+            <div id="option1"></div>
+            <div id="option2"></div>
+            <div id="option3"></div>
+            <div id="option4"></div>
+        </div>
+    </div>
     <button onclick="testClick()">Test</button>
+
 </body>
-
-<script>
-    var socket = io();
-
-    document.addEventListener('keydown', function (event) {
-        socket.emit('input', event.key);
-    });
-
-    function testClick() {
-        socket.emit('test', "test");
-        console.log("test");
-    }
-
-    socket.on('response', function (response) {
-        console.log(response);
-    });
-
-
-</script>
 
 </html>

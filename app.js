@@ -1,5 +1,6 @@
 // Load third party dependencies
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var _ = require('lodash');
@@ -11,9 +12,7 @@ const UserStore = require('./userStore.js');
 const userStore = new UserStore();
 
 // Serve static html files for clients
-app.get('/client', (req, res) => {
-    res.sendFile(`${__dirname}/client/index.html`);
-});
+app.use(express.static('client'));
 
 // Begin responding to websocket and http requests
 http.listen(process.env.PORT || 3000, () => {
