@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Basic multiplayer online game</title>
+</head>
+
+<body>
+    <div id='game'></div>
+    <button onclick="testClick()">Test</button>
+</body>
+
+<script>
+    var socket = io();
+
+    document.addEventListener('keydown', function (event) {
+        socket.emit('input', event.key);
+    });
+
+    function testClick() {
+        socket.emit('test', "test");
+        console.log("test");
+    }
+
+    socket.on('player move', function (user) {
+        console.log(user);
+    });
+
+
+</script>
+
+</html>

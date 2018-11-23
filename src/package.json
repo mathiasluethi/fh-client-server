@@ -1,0 +1,23 @@
+{
+  "name": "socket-game-server",
+  "version": "1.0.0",
+  "description": " Very basic multiplayer online game example made with Phaser, Node.js and Socket.io ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "Phaser",
+    "Multiplayer",
+    "game",
+    "Node.js",
+    "socket.io"
+  ],
+  "author": "Mathias Luethi",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "socket.io": "^2.1.1"
+  }
+}
