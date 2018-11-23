@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
     <title>Basic multiplayer online game</title>
 </head>
 
@@ -11,24 +12,5 @@
     <div id='game'></div>
     <button onclick="testClick()">Test</button>
 </body>
-
-<script>
-    var socket = io();
-
-    document.addEventListener('keydown', function (event) {
-        socket.emit('input', event.key);
-    });
-
-    function testClick() {
-        socket.emit('test', "test");
-        console.log("test");
-    }
-
-    socket.on('response', function (response) {
-        console.log(response);
-    });
-
-
-</script>
 
 </html>
