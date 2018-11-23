@@ -42,7 +42,7 @@ let users = [];
 
 io.on('connection', function (socket) {
     socket.on('test', function (input) {
-        console.log('he clicked')
+        socket.emit('response', "Response")
     });
 
 
