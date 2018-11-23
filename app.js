@@ -31,17 +31,19 @@ class User {
 let users = [];
 
 io.on('connection', function (socket) {
-
-    users.push(new User(socket.id, [], []));
-    if (users.length == 3) {
-        console.log("create game");
-        createGame(socket);
-    } else if (users.length == 1) {
+    console.log(users.length);
+    if (users.length === 0) {
+        users.push(new User(socket.id, [], []));
         console.log(String(users.length) + " Player connected");
         socket.emit('info', String(users.length) + " Player connected");
-    } else {
+    } else if (users.length === 1) {
+        users.push(new User(socket.id, [], []));
         console.log(String(users.length) + " Players connected");
         socket.emit('info', String(users.length) + " Player connected");
+    } else if (users.length === 2) {
+        users.push(new User(socket.id, [], []));
+        console.log("create game");
+        createGame(socket);
     }
 });
 
@@ -100,8 +102,8 @@ function createGame(socket) {
     }
 
     gameState = {};
-    gameState.rounds = 1;
-    gameState.lives = 3;
+    gameState.rounds = round;
+    gameState.lives = lives;
     gameState.mission = mission;
     socket.emit('game_state', gameState);
 
@@ -109,6 +111,4 @@ function createGame(socket) {
         io.to(users[i].id).emit('pictures', users[i].pictures);
         io.to(users[i].id).emit('question', users[i].questions);
     }
-
-
 }
