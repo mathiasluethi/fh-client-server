@@ -83,6 +83,14 @@ body {
     background-repeat: no-repeat;
     background-position: 50%;
 }
+#play_button {
+    background-image: url(images/play.png);
+    height: 107px;
+    width: 150px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
 .text {
     font-size: 30px;
 }
@@ -174,12 +182,23 @@ body {
 }
 
 
-.move-background {
-    animation: move-background 1s ease-in-out;
+.move-background-1 {
+    animation: move-background-1 2s ease-in-out;
     animation-fill-mode:forwards;
 }
 
-@-webkit-keyframes move-background {
+@-webkit-keyframes move-background-1 {
     0% { background-position-x: 0; }
-    100% { background-position-x: -500px; }
+    100% { background-position-x: -620px; }
+}
+
+.move-background-2 {
+    background-position-x: 150px;
+    animation: move-background-2 1s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes move-background-2 {
+    0% { background-position-x: 150px; }
+    100% { background-position-x: -300px; }
 }

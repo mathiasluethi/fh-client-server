@@ -10,7 +10,6 @@ socket.on('response', function (response) {
 
 socket.on('game_state', function (gameState) {
     console.log('game_state received', gameState);
-    hideLobby()
     updateMission(gameState.mission);
 });
 
@@ -45,7 +44,7 @@ socket.on('player_count', function (users) {
 });
 
 function startGame() {
-    transitionScreen()
+    transitionScreen();
     console.log('game started');
     socket.emit('start_game');
     // TODO: implement game start
@@ -53,15 +52,28 @@ function startGame() {
 
 function transitionScreen() {
     var el1 = document.getElementById('lobby');
-    var el2 = document.getElementById('transition-screen');
     el1.style = "display: none;";
-    el2.style = "display: unset;";
+    moveBackground1();
+
+    setTimeout(function () {
+        var screenEl = document.getElementById('screen');
+        screenEl.style.webkitAnimationPlayState = 'paused';
+
+        var el2 = document.getElementById('transition-screen');
+        el2.style = "display: unset;";
+    }, 1000);
 }
 function gameScreen() {
     var el1 = document.getElementById('transition-screen');
-    var el2 = document.getElementById('game');
     el1.style = "display: none;";
-    el2.style = "display: unset;";
+
+    var screenEl = document.getElementById('screen');
+    screenEl.style.webkitAnimationPlayState = 'running';
+    // moveBackground2();
+    setTimeout(function () {
+        var el2 = document.getElementById('game');
+        el2.style = "display: unset;";
+    }, 1000);
 }
 
 function updateQuestion(question) {
@@ -118,7 +130,12 @@ function shakeScreen() {
     screenEl.classList.add('shake');
 }
 
-function moveBackground() {
+function moveBackground1() {
     var screenEl = document.getElementById('screen');
-    screenEl.classList.add('move-background');
+    screenEl.classList.add('move-background-1');
+}
+function moveBackground2() {
+    var screenEl = document.getElementById('screen');
+    screenEl.classList.remove('move-background-1');
+    screenEl.classList.add('move-background-2');
 }
