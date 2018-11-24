@@ -161,3 +161,14 @@ body {
     90% { -webkit-transform: translate(-50.5%, -50.5%) rotate(0deg); }
     100% { -webkit-transform: translate(-50.5%, -50.5%) rotate(-1deg); }
 }
+
+
+.move-background {
+    animation: move-background 1s ease-in-out;
+    animation-fill-mode:forwards;
+}
+
+@-webkit-keyframes move-background {
+    0% { background-position-x: 0; }
+    100% { background-position-x: -500px; }
+}
