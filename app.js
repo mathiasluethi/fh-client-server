@@ -28,16 +28,20 @@ io.on('connection', function (socket) {
     if (users.length === 0) {
         users.push(new User(socket.id, [], 0));
         console.log(String(users.length) + " Player connected");
-        socket.emit('info', String(users.length) + " Player connected");
+        socket.emit('player_count', users);
     } else if (users.length === 1) {
         users.push(new User(socket.id, [], 0));
         console.log(String(users.length) + " Players connected");
-        socket.emit('info', String(users.length) + " Player connected");
+        socket.emit('player_count', users);
     } else if (users.length === 2) {
         users.push(new User(socket.id, [], 0));
-        console.log("create game");
-        createGame(socket);
+        console.log(String(users.length) + " Players connected");
+        socket.emit('player_count', users);
     }
+
+    socket.on('start_game', function () {
+        createGame();
+    });
 
     socket.on('selection', function (answer) {
         id = socket.id;
