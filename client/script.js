@@ -58,10 +58,10 @@ function updateMission(mission) {
 function updatePictures(pictures) {
     for (var i = 1; i <= 4; i++) {
         var optionEl = document.getElementById('option' + i);
-        optionEl.innerHTML = 'option'+i;
+
         // TODO: handle error cases
-        optionEl.src = "images/" + pictures[i]
-        console.log('setting new image ' + i);
+        optionEl.src = "images/" + pictures[i-1].picture;
+        console.log('setting new image ' + i-1);
     }
     console.log('ui updated');
 }
