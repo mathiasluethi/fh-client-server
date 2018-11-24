@@ -169,10 +169,10 @@ var questions_3 = [
 ];
 
 var pictures_1 = [
-    { picture: "seil" },
-    { picture: "ente" },
-    { picture: "boot" },
-    { picture: "flasche" },
+    { picture: "seil.png" },
+    { picture: "ente.png" },
+    { picture: "boot.png" },
+    { picture: "flasche.png" },
     { picture: "P5" },
     { picture: "P6" },
     { picture: "P7" },
