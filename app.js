@@ -20,10 +20,10 @@ http.listen(process.env.PORT || 3000, () => {
 });
 
 class User {
-    constructor(id, pictures, questions) {
+    constructor(id, pictures, current) {
         this.id = id;
         this.pictures = pictures;
-        this.questions = questions;
+        this.current = current;
     }
 
 }
@@ -31,17 +31,16 @@ class User {
 let users = [];
 
 io.on('connection', function (socket) {
-    console.log(users.length);
     if (users.length === 0) {
-        users.push(new User(socket.id, [], []));
+        users.push(new User(socket.id, [], 0));
         console.log(String(users.length) + " Player connected");
         socket.emit('info', String(users.length) + " Player connected");
     } else if (users.length === 1) {
-        users.push(new User(socket.id, [], []));
+        users.push(new User(socket.id, [], 0));
         console.log(String(users.length) + " Players connected");
         socket.emit('info', String(users.length) + " Player connected");
     } else if (users.length === 2) {
-        users.push(new User(socket.id, [], []));
+        users.push(new User(socket.id, [], 0));
         console.log("create game");
         createGame(socket);
     }
@@ -51,36 +50,28 @@ var round;
 var mission;
 var lives;
 
-
-var questions = [
-    { question: "Q1?", answer: "P1" },
-    { question: "Q2?", answer: "P2" },
-    { question: "Q3?", answer: "P3" },
-    { question: "Q4?", answer: "P4" },
-    { question: "Q5?", answer: "P5" },
-    { question: "Q6?", answer: "P6" },
-]
-
-var pictures = [
-    { picture: "P1" },
-    { picture: "P2" },
-    { picture: "P3" },
-    { picture: "P4" },
-    { picture: "P5" },
-    { picture: "P6" },
-    { picture: "P7" },
-    { picture: "P8" },
-    { picture: "P9" },
-    { picture: "P10" },
-    { picture: "P11" },
-    { picture: "P12" },
-]
-
 // Game logic
 function createGame(socket) {
     round = 1;
     lives = 3;
-    mission = "There is a river in the way";
+
+    newRound(socket)
+}
+
+function newRound(socket) {
+    if (round === 1) {
+        pictures = pictures_1;
+        questions = questions_1;
+        mission = mission_1
+    } else if (round === 2) {
+        pictures = pictures_1;
+        questions = questions_1;
+        mission = mission_1
+    } else if (round === 2) {
+        pictures = pictures_1;
+        questions = questions_1;
+        mission = mission_1
+    }
 
     _.shuffle(pictures);
     for (i = 0; i < pictures.length; i = i) {
@@ -95,7 +86,7 @@ function createGame(socket) {
         while (j !== 1) {
             question = _.sample(questions)
             if (users[i].pictures.includes(question.answer) === false) {
-                users[i].questions.push(question);
+                users[i].question = question;
                 j++;
             }
         }
@@ -109,6 +100,83 @@ function createGame(socket) {
 
     for (i = 0; i < 3; i++) {
         io.to(users[i].id).emit('pictures', users[i].pictures);
-        io.to(users[i].id).emit('question', users[i].questions);
+        io.to(users[i].id).emit('question', users[i].question);
     }
 }
+
+// Hardcoded variables
+mission_1 = "There is a river in the way!";
+mission_2 = "There is a river in the way!";
+mission_3 = "There is a river in the way!";;
+
+var questions_1 = [
+    { question: "Q1?", answer: "P1" },
+    { question: "Q2?", answer: "P2" },
+    { question: "Q3?", answer: "P3" },
+    { question: "Q4?", answer: "P4" },
+    { question: "Q5?", answer: "P5" },
+    { question: "Q6?", answer: "P6" },
+];
+
+var questions_2 = [
+    { question: "Q1?", answer: "P1" },
+    { question: "Q2?", answer: "P2" },
+    { question: "Q3?", answer: "P3" },
+    { question: "Q4?", answer: "P4" },
+    { question: "Q5?", answer: "P5" },
+    { question: "Q6?", answer: "P6" },
+];
+
+var questions_3 = [
+    { question: "Q1?", answer: "P1" },
+    { question: "Q2?", answer: "P2" },
+    { question: "Q3?", answer: "P3" },
+    { question: "Q4?", answer: "P4" },
+    { question: "Q5?", answer: "P5" },
+    { question: "Q6?", answer: "P6" },
+];
+
+var pictures_1 = [
+    { picture: "P1" },
+    { picture: "P2" },
+    { picture: "P3" },
+    { picture: "P4" },
+    { picture: "P5" },
+    { picture: "P6" },
+    { picture: "P7" },
+    { picture: "P8" },
+    { picture: "P9" },
+    { picture: "P10" },
+    { picture: "P11" },
+    { picture: "P12" },
+];
+
+var pictures_2 = [
+    { picture: "P1" },
+    { picture: "P2" },
+    { picture: "P3" },
+    { picture: "P4" },
+    { picture: "P5" },
+    { picture: "P6" },
+    { picture: "P7" },
+    { picture: "P8" },
+    { picture: "P9" },
+    { picture: "P10" },
+    { picture: "P11" },
+    { picture: "P12" },
+];
+
+var pictures_3 = [
+    { picture: "P1" },
+    { picture: "P2" },
+    { picture: "P3" },
+    { picture: "P4" },
+    { picture: "P5" },
+    { picture: "P6" },
+    { picture: "P7" },
+    { picture: "P8" },
+    { picture: "P9" },
+    { picture: "P10" },
+    { picture: "P11" },
+    { picture: "P12" },
+];
