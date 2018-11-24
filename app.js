@@ -122,15 +122,14 @@ function updateQuestion(id) {
         }
     });
 
-        for (i = 0; i < currentQuestions.length; i++) {
-            if (user.pictures.includes(question.answer) === false) {
-                user.question = currentQuestions[i];
-                currentQuestions = currentQuestions.splice(i, 1);
-            }
+    for (i = 0; i < currentQuestions.length; i++) {
+        if (user.pictures.includes(question.answer) === false) {
+            user.question = currentQuestions[i];
+            currentQuestions = currentQuestions.splice(i, 1);
         }
-
-        io.to(id).emit('question', user.question);
     }
+
+    io.to(id).emit('question', user.question);
 }
 
 function lostLife() {
