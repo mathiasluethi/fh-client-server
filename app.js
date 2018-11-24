@@ -40,7 +40,7 @@ io.on('connection', function (socket) {
     }
 
     socket.on('start_game', function () {
-        createGame();
+        createGame(socket);
     });
 
     socket.on('selection', function (answer) {
@@ -66,15 +66,15 @@ var mission;
 var lives;
 
 // Game logic
-function createGame() {
+function createGame(socket) {
     round = 1;
     questionsLeft = 3;
     lives = 3;
 
-    newRound();
+    newRound(socket);
 }
 
-function newRound() {
+function newRound(socket) {
     if (round === 1) {
         pictures = pictures_1;
         currentQuestions = _.shuffle(questions_1);
@@ -101,7 +101,7 @@ function newRound() {
         for (j = 0; j < currentQuestions.length; j++) {
             if (users[i].pictures.includes(currentQuestions[j].answer) === false) {
                 users[i].question = currentQuestions[j];
-                currentQuestions = currentQuestions.splice(j, 1);
+                currentQuestions.splice(j, 1);
                 break;
             }
         }
@@ -115,6 +115,7 @@ function newRound() {
 
     for (i = 0; i < 3; i++) {
         io.to(users[i].id).emit('pictures', users[i].pictures);
+        console.log(users[i]);
         io.to(users[i].id).emit('question', users[i].question);
     }
 }
@@ -133,7 +134,8 @@ function updateQuestion(id) {
         }
     }
 
-    io.to(id).emit('question', user.question);
+    console.log(id);
+    io.to(`${id}`).emit('question', user.question);
 }
 
 function lostLife() {
@@ -157,8 +159,8 @@ var questions_1 = [
     { question: "Q2?", answer: "ente.png" },
     { question: "Q3?", answer: "boot.png" },
     { question: "Q4?", answer: "flasche.png" },
-    { question: "Q5?", answer: "P5" },
-    { question: "Q6?", answer: "P6" },
+    { question: "Q5?", answer: "kurbis.png" },
+    { question: "Q6?", answer: "pflock.png" },
 ];
 
 var questions_2 = [
@@ -180,18 +182,18 @@ var questions_3 = [
 ];
 
 var pictures_1 = [
-    { picture: "seil.png" },
-    { picture: "ente.png" },
-    { picture: "flasche.png" },
-    { picture: "baumstamm.png" },
-    { picture: "fass.png" },
-    { picture: "korb.png" },
-    { picture: "kurbis.png" },
-    { picture: "pfeilbogen.png" },
-    { picture: "pflock.png" },
-    { picture: "schlussel.png" },
-    { picture: "stein.png" },
-    { picture: "tuch.png" },
+    "seil.png",
+    "ente.png",
+    "flasche.png",
+    "baumstamm.png",
+    "fass.png",
+    "korb.png",
+    "kurbis.png",
+    "pfeilbogen.png",
+    "pflock.png",
+    "schlussel.png",
+    "stein.png",
+    "tuch.png",
 ];
 
 var pictures_2 = [
