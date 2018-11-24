@@ -28,15 +28,15 @@ io.on('connection', function (socket) {
     if (users.length === 0) {
         users.push(new User(socket.id, [], 0));
         console.log(String(users.length) + " Player connected");
-        socket.emit('player_count', users);
+        io.emit('player_count', users);
     } else if (users.length === 1) {
         users.push(new User(socket.id, [], 0));
         console.log(String(users.length) + " Players connected");
-        socket.emit('player_count', users);
+        io.emit('player_count', users);
     } else if (users.length === 2) {
         users.push(new User(socket.id, [], 0));
         console.log(String(users.length) + " Players connected");
-        socket.emit('player_count', users);
+        io.emit('player_count', users);
     }
 
     socket.on('start_game', function () {
@@ -150,17 +150,17 @@ function lostLife() {
 }
 
 // Hardcoded variables
-mission_1 = "There is a river in the way!";
+mission_1 = "Nous devons traverser la rivière avec beaucoup de piranhas ! \nPour faire ça, nous devons construire un radeau.";
 mission_2 = "There is a river in the way!";
 mission_3 = "There is a river in the way!";;
 
 var questions_1 = [
-    { question: "Q1?", answer: "seil.png" },
-    { question: "Q2?", answer: "ente.png" },
-    { question: "Q3?", answer: "boot.png" },
-    { question: "Q4?", answer: "flasche.png" },
-    { question: "Q5?", answer: "kurbis.png" },
-    { question: "Q6?", answer: "pflock.png" },
+    { question: "J'ai besoin d'une corde.", answer: "seil.png" },
+    { question: "Qui a un canard?", answer: "ente.png" },
+    { question: "J'ai besoin d'une pierre.", answer: "pierre.png" },
+    { question: "J'ai besoin d'un panier?", answer: "korb.png" },
+    { question: "J'ai besoin d'un drap?", answer: "kurbis.png" },
+    { question: "J'ai besoin d'un bâton?", answer: "pflock.png" },
 ];
 
 var questions_2 = [

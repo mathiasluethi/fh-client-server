@@ -40,6 +40,8 @@ socket.on('player_count', function (users) {
         var playerEl = document.getElementById('player' + i);
         playerEl.style = "display: flex; justify-content: center; align-items: center;";
    }
+   var count = document.getElementById('player-count');
+   count.innerHTML = users.length + "/3 Players"
 });
 
 function startGame() {
