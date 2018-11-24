@@ -33,6 +33,10 @@ socket.on('pictures', function (pictures) {
     console.log(pictures);
 });
 
+socket.on('info', function (info) {
+   console.log('info', info);
+});
+
 function startGame() {
     var el1 = document.getElementById('lobby');
     var el2 = document.getElementById('game');
