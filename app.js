@@ -53,7 +53,7 @@ io.on('connection', function (socket) {
             }
         });
         if (isValidAnswer) {
-            updateQuestion(id);
+            updateQuestion(id, answer);
         } else {
             lostLife(socket);
         }
@@ -120,22 +120,30 @@ function newRound(socket) {
     }
 }
 
-function updateQuestion(id) {
+function updateQuestion(id, answer) {
     var user = users.find(function (user) {
         if (user.id === id) {
             return user;
         }
     });
 
-    for (i = 0; i < currentQuestions.length; i++) {
-        if (user.pictures.includes(question.answer) === false) {
-            user.question = currentQuestions[i];
-            currentQuestions = currentQuestions.splice(i, 1);
+    var newQuestionUser;
+    for (i = 0; i < users.length; i++) {
+        if (users[i].question.answer === answer) {
+            for (j = 0; j < currentQuestions.length; j++) {
+                if (users[i].pictures.includes(currentQuestions[j].answer) === false) {
+                    users[i].question = currentQuestions[j];
+                    console.log(users[i].question);
+                    currentQuestions.splice(j, 1);
+                    newQuestionUser = users[i];
+                    break;
+                }
+            }
         }
     }
 
-    console.log(id);
-    io.to(`${id}`).emit('question', user.question);
+    console.log('currentQuestions: ', currentQuestions);
+    io.to(`${newQuestionUser.id}`).emit('question', newQuestionUser.question);
 }
 
 function lostLife() {
@@ -157,7 +165,7 @@ mission_3 = "There is a river in the way!";;
 var questions_1 = [
     { question: "Q1?", answer: "seil.png" },
     { question: "Q2?", answer: "ente.png" },
-    { question: "Q3?", answer: "boot.png" },
+    { question: "Q3?", answer: "stein.png" },
     { question: "Q4?", answer: "flasche.png" },
     { question: "Q5?", answer: "kurbis.png" },
     { question: "Q6?", answer: "pflock.png" },
@@ -166,7 +174,7 @@ var questions_1 = [
 var questions_2 = [
     { question: "Q1?", answer: "seil.png" },
     { question: "Q2?", answer: "ente.png" },
-    { question: "Q3?", answer: "boot.png" },
+    { question: "Q3?", answer: "stein.png" },
     { question: "Q4?", answer: "flasche.png" },
     { question: "Q5?", answer: "P5" },
     { question: "Q6?", answer: "P6" },
