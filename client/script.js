@@ -34,8 +34,13 @@ socket.on('pictures', function (pictures) {
 });
 
 function startGame() {
+    var el1 = document.getElementById('lobby');
+    var el2 = document.getElementById('game');
+    el1.style = "display: none;";
+    el2.style = "display: unset;"
     console.log('game started');
     socket.emit('start_game');
+    // TODO: implement game start
 }
 
 function updateQuestion(question) {
