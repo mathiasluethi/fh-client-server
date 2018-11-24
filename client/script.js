@@ -10,6 +10,7 @@ socket.on('response', function (response) {
 
 socket.on('game_state', function (gameState) {
     console.log('game_state received', gameState);
+
     updateMission(gameState.mission);
 });
 
@@ -52,7 +53,9 @@ function updateMission(mission) {
 function updatePictures(pictures) {
     for (var i = 1; i <= 4; i++) {
         var optionEl = document.getElementById('option' + i);
-       // optionEl.innerHTML = 'option'+i;
+        optionEl.innerHTML = 'option'+i;
+        // TODO: handle error cases
+        optionEl.src = "images/" + pictures[i]
         console.log('setting new image ' + i);
     }
     console.log('ui updated');
