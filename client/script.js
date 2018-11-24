@@ -36,6 +36,10 @@ socket.on('pictures', function (pictures) {
 
 socket.on('player_count', function (users) {
    console.log('users', users);
+   for (var i = 1; i <= users.length; i++) {
+        var playerEl = document.getElementById('player' + i);
+        playerEl.style = "display: flex; justify-content: center; align-items: center;";
+   }
 });
 
 function startGame() {
