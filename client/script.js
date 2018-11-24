@@ -73,7 +73,7 @@ function updatePictures(pictures) {
         var optionEl = document.getElementById('option' + i);
 
         // TODO: handle error cases
-        optionEl.src = "images/" + pictures[i-1].picture;
+        optionEl.src = "images/" + pictures[i-1];
         console.log('setting new image ' + i-1);
     }
     console.log('ui updated');
