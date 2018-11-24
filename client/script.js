@@ -13,6 +13,16 @@ socket.on('game_state', function (gameState) {
     updateMission(gameState.mission);
 });
 
+socket.on('game_over', function (message) {
+    console.log('game_over', message);
+    // TODO: implement game over
+});
+
+socket.on('lives_lost', function (lives) {
+    console.log('lives_lost', lives);
+    // TODO: update lives count
+});
+
 socket.on('question', function (question) {
     updateQuestion(question);
 });
