@@ -38,6 +38,17 @@ io.on('connection', function (socket) {
         console.log("create game");
         createGame(socket);
     }
+
+    socket.on('selection', function (answer) {
+        id = socket.id;
+        users.forEach(function (user) {
+            if (answer === user.question.answer) {
+                updateQuestion();
+            } else {
+                lostLife();
+            }
+        });
+    });
 });
 
 var round;
@@ -98,6 +109,33 @@ function newRound(socket) {
     }
 }
 
+function updateQuestion(id) {
+    user = users.find(function (user) {
+        if (user.id === id) {
+            return user;
+        }
+    });
+
+    j = true;
+    while (j) {
+        question = _.sample(questions);
+        if (user.pictures.includes(question.answer) === false) {
+            user.question = question;
+            j = false;
+        }
+    }
+    io.to(id).emit('question', user.question);
+}
+
+function lostLife() {
+    lives--;
+    if (lives === 0) {
+        socket.emit('game_over', "You lost: your score");
+    } else {
+        socket.emit('lives_lost', lives);
+    }
+}
+
 // Hardcoded variables
 mission_1 = "There is a river in the way!";
 mission_2 = "There is a river in the way!";
@@ -131,10 +169,10 @@ var questions_3 = [
 ];
 
 var pictures_1 = [
-    { picture: "P1" },
-    { picture: "P2" },
-    { picture: "P3" },
-    { picture: "P4" },
+    { picture: "seil" },
+    { picture: "ente" },
+    { picture: "boot" },
+    { picture: "flasche" },
     { picture: "P5" },
     { picture: "P6" },
     { picture: "P7" },
