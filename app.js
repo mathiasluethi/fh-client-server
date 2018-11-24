@@ -178,16 +178,16 @@ var questions_3 = [
 var pictures_1 = [
     { picture: "seil.png" },
     { picture: "ente.png" },
-    { picture: "boot.png" },
     { picture: "flasche.png" },
-    { picture: "P5" },
-    { picture: "P6" },
-    { picture: "P7" },
-    { picture: "P8" },
-    { picture: "P9" },
-    { picture: "P10" },
-    { picture: "P11" },
-    { picture: "P12" },
+    { picture: "baumstamm.png" },
+    { picture: "fass.png" },
+    { picture: "korb.png" },
+    { picture: "kürbis.png" },
+    { picture: "pfeilbogen.png" },
+    { picture: "pflock.png" },
+    { picture: "schlüssel.png" },
+    { picture: "stein.png" },
+    { picture: "tuch.png" },
 ];
 
 var pictures_2 = [
