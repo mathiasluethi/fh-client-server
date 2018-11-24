@@ -5,12 +5,6 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var _ = require('lodash');
 
-// Load custom classes
-const UserStore = require('./userStore.js');
-
-// Instantiate app
-const userStore = new UserStore();
-
 // Serve static html files for clients
 app.use(express.static('client'));
 
