@@ -1,0 +1,58 @@
+#screen { 
+    position: absolute;
+    height: 765px;
+    width: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(images/jungle.png);
+}
+#upperScreen {
+    height: 50%;
+}
+#mission {
+    height: 35%;
+}
+.text {
+    font-family: Helvetica;
+    font-size: 40px;
+}
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#mission-field {
+    height: 80%;
+    width: 90%;
+    border-radius: 43px;
+    background-color: rgba(255,255,255,0.6);
+}
+
+#question {
+    height: 65%;
+}
+#question-field {
+    height: 80%;
+    width: 90%;
+    background-color: rgba(255,255,255,0.6);
+}
+
+#lowerScreen {
+    height: 50%;
+}
+.wrapper {
+    height: 150px;
+    width: 150px;
+    border-radius: 43px;
+    background-color: rgba(255,255,255,0.6);
+}
+.images {
+    height: 125px;
+    width: 125px;
+}
+.quarter {
+    height: 50%;
+    width: 50%;
+    float: left;
+}
