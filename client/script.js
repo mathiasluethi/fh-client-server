@@ -4,11 +4,6 @@ document.addEventListener('keydown', function (event) {
     socket.emit('input', event.key);
 });
 
-function testClick() {
-    socket.emit('test', "test");
-    console.log("test");
-}
-
 socket.on('response', function (response) {
     console.log(response);
 });
@@ -20,7 +15,7 @@ socket.on('game_state', function (gameState) {
 
 socket.on('question', function (question) {
     // TODO: fix array
-    updateQuestion(question[0]);
+    updateQuestion(question);
 });
 
 socket.on('pictures', function (pictures) {
@@ -34,13 +29,13 @@ function startGame() {
 }
 
 function updateQuestion(question) {
-    var qEl = document.getElementById('question');
+    var qEl = document.getElementById('question-text');
     qEl.innerHTML = question.question;
     console.log(question);
 }
 
 function updateMission(mission) {
-    var mEl = document.getElementById('mission');
+    var mEl = document.getElementById('mission-text');
     mEl.innerHTML = mission;
     console.log('mission updated', mission);
 }
@@ -48,12 +43,15 @@ function updateMission(mission) {
 function updatePictures(pictures) {
     for (var i = 1; i <= 4; i++) {
         var optionEl = document.getElementById('option' + i);
-        optionEl.innerHTML = 'option'+i;
+       // optionEl.innerHTML = 'option'+i;
         console.log('setting new image ' + i);
     }
     console.log('ui updated');
 }
 
-function sendClickEvent() {
-    socket.emit('selection', 'test');
+function  makeSelection(event) {
+    var sourceString = event.srcElement.src.split('/');
+    var pictureString = sourceString[sourceString.length - 1]
+    console.log('selection made')
+    socket.emit('selection', name);
 }
