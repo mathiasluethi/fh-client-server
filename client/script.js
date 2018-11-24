@@ -10,7 +10,7 @@ socket.on('response', function (response) {
 
 socket.on('game_state', function (gameState) {
     console.log('game_state received', gameState);
-
+    hideLobby()
     updateMission(gameState.mission);
 });
 
@@ -33,18 +33,22 @@ socket.on('pictures', function (pictures) {
     console.log(pictures);
 });
 
-socket.on('info', function (info) {
-   console.log('info', info);
+socket.on('player_count', function (users) {
+   console.log('users', users);
 });
 
 function startGame() {
-    var el1 = document.getElementById('lobby');
-    var el2 = document.getElementById('game');
-    el1.style = "display: none;";
-    el2.style = "display: unset;"
+    hideLobby()
     console.log('game started');
     socket.emit('start_game');
     // TODO: implement game start
+}
+
+function hideLobby() {
+    var el1 = document.getElementById('lobby');
+    var el2 = document.getElementById('game');
+    el1.style = "display: none;";
+    el2.style = "display: unset;";
 }
 
 function updateQuestion(question) {
