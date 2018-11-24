@@ -20,6 +20,7 @@ socket.on('game_over', function (message) {
 });
 
 socket.on('lives_lost', function (lives) {
+    lifeLostAnimation();
     console.log('lives_lost', lives);
     // TODO: update lives count
 });
@@ -72,7 +73,32 @@ function updatePictures(pictures) {
 
 function  makeSelection(event) {
     var sourceString = event.srcElement.src.split('/');
-    var pictureString = sourceString[sourceString.length - 1]
-    console.log('selection made', pictureString)
+    var pictureString = sourceString[sourceString.length - 1];
+    console.log('selection made', pictureString);
     socket.emit('selection', pictureString);
+}
+
+function lifeLostAnimation() {
+    flashScreen();
+    shakeScreen();
+}
+
+function flashScreen() {
+    var flashOverlayEl = document.getElementById('life-lost-overlay');
+    flashOverlayEl.style.display = 'block';
+    flashOverlayEl.classList.remove('flash');
+    void flashOverlayEl.offsetWidth;
+    flashOverlayEl.classList.add('flash');
+    setTimeout(function () {
+        flashOverlayEl.style.display = 'none';
+    }, 400);
+}
+function shakeScreen() {
+    var screenEl = document.getElementById('screen');
+
+    screenEl.classList.remove('shake');
+    void screenEl.offsetWidth;
+    screenEl.classList.add('shake');
+    //screenEl.style.animation = '';
+    //screenEl.style.animation = 'shake 0.4s 1';
 }
