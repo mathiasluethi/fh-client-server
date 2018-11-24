@@ -1,7 +1,7 @@
 body {
     font-family: Helvetica;
 }
-#screen { 
+#screen {
     position: absolute;
     height: 765px;
     width: 400px;
@@ -14,7 +14,7 @@ body {
     height: 400px;
     width: 90%;
     background-color: rgba(255, 255, 255, .8);
-    
+
 }
 #lobby-field{
     height: 60%;
@@ -81,8 +81,15 @@ body {
     border-radius: 43px;
     background-color: rgba(255,255,255,0.6);
 }
+.image-container {
+    overflow: hidden;
+    height: 110px;
+    margin-top: -10px;
+}
 .images {
+    object-fit: scale-down;
     height: 125px;
+    height: 137px;
     width: 125px;
 }
 .quarter {
