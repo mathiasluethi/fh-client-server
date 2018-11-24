@@ -43,7 +43,7 @@ io.on('connection', function (socket) {
         id = socket.id;
         isValidAnswer = false;
         users.forEach(function (user) {
-            console.log(answer, user.question.answer );
+            console.log(answer, user.question.answer);
             if (answer === user.question.answer) {
                 isValidAnswer = true;
             }
@@ -57,30 +57,32 @@ io.on('connection', function (socket) {
 });
 
 var round;
+var currentQuestions;
 var mission;
 var lives;
 
 // Game logic
-function createGame(socket) {
+function createGame() {
     round = 1;
+    questionsLeft = 3;
     lives = 3;
 
-    newRound(socket)
+    newRound();
 }
 
-function newRound(socket) {
+function newRound() {
     if (round === 1) {
         pictures = pictures_1;
-        questions = questions_1;
-        mission = mission_1
+        currentQuestions = _.shuffle(questions_1);
+        mission = mission_1;
     } else if (round === 2) {
-        pictures = pictures_1;
-        questions = questions_1;
-        mission = mission_1
-    } else if (round === 2) {
-        pictures = pictures_1;
-        questions = questions_1;
-        mission = mission_1
+        pictures = pictures_2;
+        currentQuestions = _.shuffle(questions_2);
+        mission = mission_2;
+    } else if (round === 3) {
+        pictures = pictures_3;
+        currentQuestions = _.shuffle(questions_3);
+        mission = mission_3;
     }
 
     _.shuffle(pictures);
@@ -92,12 +94,11 @@ function newRound(socket) {
     }
 
     for (i = 0; i < users.length; i++) {
-        j = 0;
-        while (j !== 1) {
-            question = _.sample(questions)
-            if (users[i].pictures.includes(question.answer) === false) {
-                users[i].question = question;
-                j++;
+        for (j = 0; j < currentQuestions.length; j++) {
+            if (users[i].pictures.includes(currentQuestions[j].answer) === false) {
+                users[i].question = currentQuestions[j];
+                currentQuestions = currentQuestions.splice(j, 1);
+                break;
             }
         }
     }
@@ -106,7 +107,7 @@ function newRound(socket) {
     gameState.rounds = round;
     gameState.lives = lives;
     gameState.mission = mission;
-    socket.emit('game_state', gameState);
+    io.emit('game_state', gameState);
 
     for (i = 0; i < 3; i++) {
         io.to(users[i].id).emit('pictures', users[i].pictures);
@@ -115,30 +116,34 @@ function newRound(socket) {
 }
 
 function updateQuestion(id) {
-    user = users.find(function (user) {
-        if (user.id === id) {
-            return user;
-        }
-    });
+    if (currentQuestions.length <= 0) {
+        round = 2;
+        newRound();
+    } else {
+        user = users.find(function (user) {
+            if (user.id === id) {
+                return user;
+            }
+        });
 
-    j = true;
-    while (j) {
-        question = _.sample(questions);
-        if (user.pictures.includes(question.answer) === false) {
-            user.question = question;
-            j = false;
+        for (i = 0; i < currentQuestions.length; i++) {
+            if (user.pictures.includes(question.answer) === false) {
+                user.question = currentQuestions[i];
+                currentQuestions = currentQuestions.splice(i, 1);
+            }
         }
+
+        io.to(id).emit('question', user.question);
     }
-    io.to(id).emit('question', user.question);
 }
 
-function lostLife(socket) {
+function lostLife() {
     lives--;
     if (lives === 0) {
-        socket.emit('game_over', "You lost: your score");
+        io.emit('game_over', "You lost: your score");
         console.log(lives)
     } else {
-        socket.emit('lives_lost', lives);
+        io.emit('lives_lost', lives);
         console.log("update")
     }
 }
@@ -149,10 +154,10 @@ mission_2 = "There is a river in the way!";
 mission_3 = "There is a river in the way!";;
 
 var questions_1 = [
-    { question: "Q1?", answer: "P1" },
-    { question: "Q2?", answer: "P2" },
-    { question: "Q3?", answer: "P3" },
-    { question: "Q4?", answer: "P4" },
+    { question: "Q1?", answer: "seil.png" },
+    { question: "Q2?", answer: "ente.png" },
+    { question: "Q3?", answer: "boot.png" },
+    { question: "Q4?", answer: "flasche.png" },
     { question: "Q5?", answer: "P5" },
     { question: "Q6?", answer: "P6" },
 ];
