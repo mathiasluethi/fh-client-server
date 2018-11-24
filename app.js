@@ -186,10 +186,10 @@ var pictures_1 = [
     { picture: "baumstamm.png" },
     { picture: "fass.png" },
     { picture: "korb.png" },
-    { picture: "kürbis.png" },
+    { picture: "kurbis.png" },
     { picture: "pfeilbogen.png" },
     { picture: "pflock.png" },
-    { picture: "schlüssel.png" },
+    { picture: "schlussel.png" },
     { picture: "stein.png" },
     { picture: "tuch.png" },
 ];
