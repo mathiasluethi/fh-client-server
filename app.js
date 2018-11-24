@@ -45,7 +45,7 @@ io.on('connection', function (socket) {
             if (answer === user.question.answer) {
                 updateQuestion();
             } else {
-                lostLife();
+                lostLife(socket);
             }
         });
     });
@@ -127,7 +127,7 @@ function updateQuestion(id) {
     io.to(id).emit('question', user.question);
 }
 
-function lostLife() {
+function lostLife(socket) {
     lives--;
     if (lives === 0) {
         socket.emit('game_over', "You lost: your score");
