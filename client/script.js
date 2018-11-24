@@ -109,12 +109,16 @@ function flashScreen() {
         flashOverlayEl.style.display = 'none';
     }, 400);
 }
+
 function shakeScreen() {
     var screenEl = document.getElementById('screen');
 
     screenEl.classList.remove('shake');
     void screenEl.offsetWidth;
     screenEl.classList.add('shake');
-    //screenEl.style.animation = '';
-    //screenEl.style.animation = 'shake 0.4s 1';
+}
+
+function moveBackground() {
+    var screenEl = document.getElementById('screen');
+    screenEl.classList.add('move-background');
 }
