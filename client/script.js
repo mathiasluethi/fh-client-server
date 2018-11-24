@@ -14,7 +14,6 @@ socket.on('game_state', function (gameState) {
 });
 
 socket.on('question', function (question) {
-    // TODO: fix array
     updateQuestion(question);
 });
 
@@ -52,6 +51,6 @@ function updatePictures(pictures) {
 function  makeSelection(event) {
     var sourceString = event.srcElement.src.split('/');
     var pictureString = sourceString[sourceString.length - 1]
-    console.log('selection made')
-    socket.emit('selection', name);
+    console.log('selection made', pictureString)
+    socket.emit('selection', pictureString);
 }

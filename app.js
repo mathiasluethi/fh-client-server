@@ -14,10 +14,10 @@ http.listen(process.env.PORT || 3000, () => {
 });
 
 class User {
-    constructor(id, pictures, current) {
+    constructor(id, pictures, question) {
         this.id = id;
         this.pictures = pictures;
-        this.current = current;
+        this.question = question;
     }
 
 }
@@ -41,13 +41,18 @@ io.on('connection', function (socket) {
 
     socket.on('selection', function (answer) {
         id = socket.id;
+        isValidAnswer = false;
         users.forEach(function (user) {
+            console.log(answer, user.question.answer );
             if (answer === user.question.answer) {
-                updateQuestion();
-            } else {
-                lostLife(socket);
+                isValidAnswer = true;
             }
         });
+        if (isValidAnswer) {
+            updateQuestion();
+        } else {
+            lostLife(socket);
+        }
     });
 });
 
@@ -131,8 +136,10 @@ function lostLife(socket) {
     lives--;
     if (lives === 0) {
         socket.emit('game_over', "You lost: your score");
+        console.log(lives)
     } else {
         socket.emit('lives_lost', lives);
+        console.log("update")
     }
 }
 
@@ -151,10 +158,10 @@ var questions_1 = [
 ];
 
 var questions_2 = [
-    { question: "Q1?", answer: "P1" },
-    { question: "Q2?", answer: "P2" },
-    { question: "Q3?", answer: "P3" },
-    { question: "Q4?", answer: "P4" },
+    { question: "Q1?", answer: "seil.png" },
+    { question: "Q2?", answer: "ente.png" },
+    { question: "Q3?", answer: "boot.png" },
+    { question: "Q4?", answer: "flasche.png" },
     { question: "Q5?", answer: "P5" },
     { question: "Q6?", answer: "P6" },
 ];
@@ -169,10 +176,10 @@ var questions_3 = [
 ];
 
 var pictures_1 = [
-    { picture: "seil" },
-    { picture: "ente" },
-    { picture: "boot" },
-    { picture: "flasche" },
+    { picture: "seil.png" },
+    { picture: "ente.png" },
+    { picture: "boot.png" },
+    { picture: "flasche.png" },
     { picture: "P5" },
     { picture: "P6" },
     { picture: "P7" },
