@@ -49,7 +49,7 @@ io.on('connection', function (socket) {
             }
         });
         if (isValidAnswer) {
-            updateQuestion();
+            updateQuestion(id);
         } else {
             lostLife(socket);
         }
@@ -116,6 +116,7 @@ function newRound() {
 }
 
 function updateQuestion(id) {
+<<<<<<< HEAD
     if (currentQuestions.length <= 0) {
         round = 2;
         newRound();
@@ -125,6 +126,13 @@ function updateQuestion(id) {
                 return user;
             }
         });
+=======
+    var user = users.find(function (user) {
+        if (user.id === id) {
+            return user;
+        }
+    });
+>>>>>>> fd21e4a408ece85833f0f4469ebbb05c9f5569df
 
         for (i = 0; i < currentQuestions.length; i++) {
             if (user.pictures.includes(question.answer) === false) {

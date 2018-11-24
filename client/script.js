@@ -10,6 +10,7 @@ socket.on('response', function (response) {
 
 socket.on('game_state', function (gameState) {
     console.log('game_state received', gameState);
+
     updateMission(gameState.mission);
 });
 
@@ -32,9 +33,18 @@ socket.on('pictures', function (pictures) {
     console.log(pictures);
 });
 
+socket.on('info', function (info) {
+   console.log('info', info);
+});
+
 function startGame() {
+    var el1 = document.getElementById('lobby');
+    var el2 = document.getElementById('game');
+    el1.style = "display: none;";
+    el2.style = "display: unset;"
     console.log('game started');
     socket.emit('start_game');
+    // TODO: implement game start
 }
 
 function updateQuestion(question) {
@@ -52,8 +62,10 @@ function updateMission(mission) {
 function updatePictures(pictures) {
     for (var i = 1; i <= 4; i++) {
         var optionEl = document.getElementById('option' + i);
-       // optionEl.innerHTML = 'option'+i;
-        console.log('setting new image ' + i);
+
+        // TODO: handle error cases
+        optionEl.src = "images/" + pictures[i-1].picture;
+        console.log('setting new image ' + i-1);
     }
     console.log('ui updated');
 }

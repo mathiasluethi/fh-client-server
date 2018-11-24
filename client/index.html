@@ -10,38 +10,63 @@
 </head>
 
 <body>
-    <div id='screen'>
-        <div id="upperScreen">
-            <div id="mission" class="center">
-                <div id="mission-field" class="center">
-                    <span id="mission-text" class="text">Mission is loading</span>
+    <div id='screen' class="center">
+        <div id="lobby">
+            <div id="lobby-title" class="center">
+                <span>Language Adventure</span>
+            </div>
+            <div id="lobby-field" class="center">
+                <div id="players">
+                    <div class="player">
+                        Player1
+                    </div>
                 </div>
             </div>
-            <div id="question" class="center">
-                <div id="question-field" class="center">
-                    <span id="question-text" class="text">Questions are loading</span>
-                </div>
+            <div id="lobby-button" class="center">
+                <button id="start_button" onclick="startGame()">Start Game</button>
             </div>
         </div>
-        <div id="lowerScreen">
-            <div class="quarter center">
-                <div class="wrapper center" onclick="makeSelection(event)">
-                    <img src="images/seil.png" class="images"> 
+        <div id="game" class="center">
+            <div id="upperScreen">
+                <div id="mission" class="center">
+                    <div id="mission-field" class="center">
+                        <span id="mission-text" class="text">Mission is loading</span>
+                    </div>
+                </div>
+                <div id="question" class="center">
+                    <div id="question-field" class="center">
+                        <span id="question-text" class="text">Questions are loading</span>
+                    </div>
                 </div>
             </div>
-            <div class="quarter center">
-                <div class="wrapper center" onclick="makeSelection(event)">
-                    <img src="images/ente.png" class="images"> 
+            <div id="lowerScreen">
+                <div class="quarter center">
+                    <div class="wrapper center" onclick="makeSelection(event)">
+                        <div class="image-container">
+                            <img id="option1" class="images">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="quarter center">
-                <div class="wrapper center" onclick="makeSelection(event)">
-                    <img src="images/boot.png" class="images"> 
+                <div class="quarter center">
+                    <div class="wrapper center" onclick="makeSelection(event)">
+                        <div class="image-container">
+                            <img id="option2" class="images">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="quarter center">
-                <div class="wrapper center" onclick="makeSelection(event)">
-                    <img src="images/flasche.png" class="images"> 
+                <div class="quarter center">
+                    <div class="wrapper center" onclick="makeSelection(event)">
+                        <div class="image-container">
+                            <img id="option3" class="images">
+                        </div>
+                    </div>
+                </div>
+                <div class="quarter center">
+                    <div class="wrapper center" onclick="makeSelection(event)">
+                        <div class="image-container">
+                            <img id="option4" class="images">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
