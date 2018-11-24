@@ -27,6 +27,9 @@ body {
 #transition-screen{
     display: none;
 }
+#transition-title {
+    flex-direction: column;
+}
 #lobby-field{
     height: 55%;
     flex-direction: column;
