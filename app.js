@@ -49,7 +49,7 @@ io.on('connection', function (socket) {
             }
         });
         if (isValidAnswer) {
-            updateQuestion();
+            updateQuestion(id);
         } else {
             lostLife(socket);
         }
@@ -115,7 +115,7 @@ function newRound(socket) {
 }
 
 function updateQuestion(id) {
-    user = users.find(function (user) {
+    var user = users.find(function (user) {
         if (user.id === id) {
             return user;
         }
