@@ -45,14 +45,20 @@ socket.on('player_count', function (users) {
 });
 
 function startGame() {
-    hideLobby()
+    transitionScreen()
     console.log('game started');
     socket.emit('start_game');
     // TODO: implement game start
 }
 
-function hideLobby() {
+function transitionScreen() {
     var el1 = document.getElementById('lobby');
+    var el2 = document.getElementById('transition-screen');
+    el1.style = "display: none;";
+    el2.style = "display: unset;";
+}
+function gameScreen() {
+    var el1 = document.getElementById('transition-screen');
     var el2 = document.getElementById('game');
     el1.style = "display: none;";
     el2.style = "display: unset;";
